@@ -14,7 +14,8 @@ namespace CdkWorkshop
 
     public class HitCounter : Construct
     {
-        public Function Handler { get; }
+        public readonly Function Handler { get; }
+        public readonly Table MyTable;
 
         public HitCounter(Construct scope, string id, HitCounterProps props) : base(scope, id)
         {
@@ -26,6 +27,7 @@ namespace CdkWorkshop
                     Type = AttributeType.STRING
                 }
             });
+            MyTable = table;
 
             Handler = new Function(this, "HitCounterHandler", new FunctionProps
             {

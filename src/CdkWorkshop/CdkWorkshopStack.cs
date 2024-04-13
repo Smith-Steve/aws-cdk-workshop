@@ -1,7 +1,9 @@
 using Amazon.CDK;
 using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.APIGateway;
+using Cdklabs.DynamoTableViewer;
 using Constructs;
+using Amazon.CDK.AWS.DynamoDB;
 
 namespace CdkWorkshop
 {
@@ -28,6 +30,14 @@ namespace CdkWorkshop
                 //Whenever our endpoint is hit, the API Gateway service will route the request to our
                 //hit counter handler. This will log the hit and relay it over to the 'hello' funciton.
                 Handler = helloWithCounter.Handler
+            });
+
+            //Define our table viewer. Please note, this table viewer is not to be used on a production grade application.
+            //This is only to be used on cheap, one off apps for demonstration purposes.
+            new TableViewer(this, "ViewerHitCount", new TableViewerProps
+            {
+                Title = "Hello Hits",
+                Table = helloWithCounter.MyTable
             });
         }
     }
