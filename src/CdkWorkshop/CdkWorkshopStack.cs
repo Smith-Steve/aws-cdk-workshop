@@ -17,10 +17,17 @@ namespace CdkWorkshop
                 Handler = "hello.handler" // file is "hello", function is "handler"
             });
 
+            var helloWithCounter = new HitCounter(this, "HelloHitCounter", new HitCounterProps
+            {
+                Downstream = hello
+            });
+
             // defines an API Gateway REST API resource backed by our "hello" function.
             new LambdaRestApi(this, "Endpoint", new LambdaRestApiProps
             {
-                Handler = hello
+                //Whenever our endpoint is hit, the API Gateway service will route the request to our
+                //hit counter handler. This will log the hit and relay it over to the 'hello' funciton.
+                Handler = helloWithCounter.Handler
             });
         }
     }

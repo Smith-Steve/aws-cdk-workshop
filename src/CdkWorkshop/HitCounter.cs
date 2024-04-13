@@ -38,6 +38,12 @@ namespace CdkWorkshop
                     ["HITS_TABLE_NAME"] = table.TableName
                 }
             });
+
+            //Lambda permission.
+            table.GrantReadWriteData(Handler);
+
+            //Grant the lambda permission to invoke permissions to the downstream function.
+            props.Downstream.GrantInvoke(Handler);
         }
     }
 }
